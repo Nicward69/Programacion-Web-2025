@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>PRESTAPACHE - Creación de Préstamo</title>
+  <link rel="stylesheet" href="css\Mi_Perfil.css">
+</head>
+<body>
+  <header>
+    <div class="banner">
+      <img src="Imagenes/PRESTAPACHE_BANNER.jpeg" alt="Banner Prestapache">
+    </div>
+  </header>
+
+  <div class="contenedor">
+    <nav class="menu-lateral">
+      <h3>Prestapache</h3>
+      <ul>
+        <li><a href="Mi_Perfil.html">Mi perfil</a></li>
+        <li><a href="#" class="activo">Creación de préstamo</a></li>
+        <li><a href="#">Pago mensual</a></li>
+        <li><a href="#">Historial de pagos</a></li>
+        <li><a href="#">Información del préstamo</a></li>
+        <li><a href="#">Cerrar sesión</a></li>
+      </ul>
+    </nav>
+
+    <main class="contenido-principal">
+      <h2>Creación de Préstamo</h2>
+      <section class="bloque">
+        <h3>Formulario de Solicitud</h3>
+        <form action="procesar_prestamo.php" method="POST">
+          <label for="monto">Monto del Préstamo</label>
+          <input type="number" id="monto" name="monto" placeholder="Ingresa el monto solicitado" required>
+
+          <label for="plazo">Plazo (en meses)</label>
+          <input type="number" id="plazo" name="plazo" placeholder="Ingresa el plazo en meses" required>
+
+          <label for="ingresos">Ingresos Mensuales</label>
+          <input type="number" id="ingresos" name="ingresos" placeholder="Ingresa tus ingresos mensuales" required>
+
+          <label for="motivo">Motivo del Préstamo</label>
+          <textarea id="motivo" name="motivo" placeholder="Describe el motivo del préstamo" rows="4" required></textarea>
+
+          <button type="submit">Solicitar Préstamo</button>
+        </form>
+      </section>
+    </main>
+  </div>
+
+  <footer>
+    <div class="footer-content">
+      <div>
+        <h4>Visítanos</h4>
+        <p>Quintana Roo, México</p>
+        <p>Antonio Coria 431, 77013</p>
+      </div>
+      <div>
+        <h4>Síguenos</h4>
+        <p><a href="#">TikTok</a></p>
+        <p><a href="#">Discord</a></p>
+      </div>
+      <div>
+        <h4>Legal</h4>
+        <p><a href="#">Términos</a></p>
+        <p>©2025 Prestapache</p>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>

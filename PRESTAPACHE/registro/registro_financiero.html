@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro Financiero - Prestapache</title>
+    <link rel="stylesheet" href="css/styles_financiero.css">
+</head>
+<body>
+    <div class="container">
+        <div class="banner">
+            <img src="Imagenes/PRESTAPACHE_BANNER.jpeg" alt="Prestapache Banner">
+        </div>
+        <div class="register-box">
+            <h1>Registro de Datos Financieros</h1>
+            <form action="confirmacion_registro.html" method="POST">
+                <label for="curp">CURP</label>
+                <input type="text" id="curp" name="curp" placeholder="Ingresa tu CURP" required>
+
+                <label for="rfc">RFC</label>
+                <input type="text" id="rfc" name="rfc" placeholder="Ingresa tu RFC" required>
+
+                <label for="tarjeta">Número de Tarjeta Bancaria</label>
+                <input type="text" id="tarjeta" name="tarjeta" placeholder="Ingresa tu número de tarjeta bancaria" required>
+
+                <button type="submit">Registrar</button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>
