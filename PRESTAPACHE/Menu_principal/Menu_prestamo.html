@@ -2,13 +2,15 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>PRESTAPACHE - Creación de Préstamo</title>
-  <link rel="stylesheet" href="css\Mi_Perfil.css">
+  <title>Creación de Préstamo - Prestapache</title>
+  <link rel="stylesheet" href="css/creacion_prestamo.css">
 </head>
 <body>
   <header>
     <div class="banner">
-      <img src="Imagenes/PRESTAPACHE_BANNER.jpeg" alt="Banner Prestapache">
+      <img src="Imagenes/PRESTAPACHE_BANNER.jpeg" alt="Banner Prestapache" class="logo">
+      <h1>PRESTAPACHE</h1>
+      <h2>(NO) SOMOS DE CONFIANZA</h2>
     </div>
   </header>
 
@@ -17,8 +19,8 @@
       <h3>Prestapache</h3>
       <ul>
         <li><a href="Mi_Perfil.html">Mi perfil</a></li>
-        <li><a href="#" class="activo">Creación de préstamo</a></li>
-        <li><a href="#">Pago mensual</a></li>
+        <li><a href="Menu_prestamo.html" class="activo">Creación de préstamo</a></li>
+        <li><a href="pago_mensual.html">Pago mensual</a></li>
         <li><a href="#">Historial de pagos</a></li>
         <li><a href="#">Información del préstamo</a></li>
         <li><a href="#">Cerrar sesión</a></li>
@@ -26,25 +28,26 @@
     </nav>
 
     <main class="contenido-principal">
-      <h2>Creación de Préstamo</h2>
-      <section class="bloque">
-        <h3>Formulario de Solicitud</h3>
-        <form action="procesar_prestamo.php" method="POST">
-          <label for="monto">Monto del Préstamo</label>
-          <input type="number" id="monto" name="monto" placeholder="Ingresa el monto solicitado" required>
+      <h2>Solicitar un préstamo</h2>
+      <form id="prestamoForm">
+        <label for="monto">Monto del préstamo (MXN)</label>
+        <input type="number" id="monto" name="monto" min="2000" max="100000" step="100" required>
 
-          <label for="plazo">Plazo (en meses)</label>
-          <input type="number" id="plazo" name="plazo" placeholder="Ingresa el plazo en meses" required>
+        <label for="plazo">Plazo de pago (meses)</label>
+        <select id="plazo" name="plazo" required>
+          <option value="">Selecciona un plazo</option>
+          <!-- Genera desde 3 hasta 24 meses -->
+          <script>
+            for(let i=3; i<=24; i++) {
+              document.write(`<option value="${i}">${i} meses</option>`);
+            }
+          </script>
+        </select>
 
-          <label for="ingresos">Ingresos Mensuales</label>
-          <input type="number" id="ingresos" name="ingresos" placeholder="Ingresa tus ingresos mensuales" required>
+        <button type="button" onclick="calcularPrestamo()">Calcular préstamo</button>
 
-          <label for="motivo">Motivo del Préstamo</label>
-          <textarea id="motivo" name="motivo" placeholder="Describe el motivo del préstamo" rows="4" required></textarea>
-
-          <button type="submit">Solicitar Préstamo</button>
-        </form>
-      </section>
+        <div id="resultado" class="resultado"></div>
+      </form>
     </main>
   </div>
 
@@ -67,5 +70,48 @@
       </div>
     </div>
   </footer>
+
+  <script>
+    function calcularPrestamo() {
+      const monto = parseFloat(document.getElementById("monto").value);
+      const plazo = parseInt(document.getElementById("plazo").value);
+      const resultado = document.getElementById("resultado");
+
+      if (!monto || !plazo) {
+        resultado.innerHTML = "<p style='color:red;'>Por favor completa todos los campos.</p>";
+        return;
+      }
+
+      // Interés mensual del 10%, interés sobre saldo insoluto
+      let saldo = monto;
+      const tasaMensual = 0.10;
+      let pagoMensual, totalIntereses = 0;
+      let detallePagos = "<details><summary>Ver detalle de pagos</summary><ul>";
+
+      // Cálculo de pago mensual usando fórmula de amortización francesa
+      pagoMensual = saldo * (tasaMensual * Math.pow(1 + tasaMensual, plazo)) / (Math.pow(1 + tasaMensual, plazo) - 1);
+
+      for (let i = 1; i <= plazo; i++) {
+        let interesMes = saldo * tasaMensual;
+        let abonoCapital = pagoMensual - interesMes;
+        saldo -= abonoCapital;
+        totalIntereses += interesMes;
+        detallePagos += `<li>Mes ${i}: Pago $${pagoMensual.toFixed(2)} | Interés $${interesMes.toFixed(2)} | Capital $${abonoCapital.toFixed(2)} | Saldo $${saldo > 0 ? saldo.toFixed(2) : "0.00"}</li>`;
+      }
+      detallePagos += "</ul></details>";
+
+      const totalPagar = pagoMensual * plazo;
+
+      resultado.innerHTML = `
+        <h3>Resumen del préstamo:</h3>
+        <p>Monto solicitado: $${monto.toLocaleString()}</p>
+        <p>Plazo: ${plazo} meses</p>
+        <p>Interés total: $${totalIntereses.toFixed(2)}</p>
+        <p>Total a pagar: $${totalPagar.toFixed(2)}</p>
+        <p><strong>Pago mensual: $${pagoMensual.toFixed(2)}</strong></p>
+        ${detallePagos}
+      `;
+    }
+  </script>
 </body>
 </html>

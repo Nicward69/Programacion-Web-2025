@@ -36,6 +36,23 @@
                     </div>
                 </div>
 
+                <!-- Nuevos campos para préstamo -->
+                <label for="ingresos_mensuales">Ingresos Mensuales</label>
+                <input type="number" id="ingresos_mensuales" name="ingresos_mensuales" placeholder="Ingresa tus ingresos mensuales" min="0" required>
+
+                <label for="monto_prestamo">Monto de Préstamo Deseado (MXN)</label>
+                <input type="number" id="monto_prestamo" name="monto_prestamo" placeholder="Entre 2000 y 100000" min="2000" max="100000" step="100" required>
+
+                <label for="plazo_prestamo">Plazo de Pago (meses)</label>
+                <select id="plazo_prestamo" name="plazo_prestamo" required>
+                  <option value="">Selecciona un plazo</option>
+                  <script>
+                    for(let i=3; i<=24; i++) {
+                      document.write(`<option value="${i}">${i} meses</option>`);
+                    }
+                  </script>
+                </select>
+
                 <button type="submit">Registrar</button>
             </form>
         </div>
